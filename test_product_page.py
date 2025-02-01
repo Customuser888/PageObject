@@ -1,25 +1,18 @@
 from .pages.main_page import MainPage
 from selenium.webdriver.common.by import By
-from .pages.login_page import LoginPage
-
-link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
-
+from .pages.product_page import ProductPage
+import pytest
 
 
-def test_guest_can_go_to_login_page(browser):
-    link = "http://selenium1py.pythonanywhere.com"
-    page = MainPage(browser, link)
-    page.open()
-    login_page = page.go_to_login_page()
-    login_page.should_be_login_page()
+link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+
+
+
+@pytest.mark.parametrize('link', ["0", "1", "2", "3", "4", "5", "6", pytest.param("7", marks=pytest.mark.xfail), "8", "9"])
+def test_guest_can_add_product_to_basket(browser, link):
     
-    
-def add_product(browser):
-    login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
-    login_link.click()
-
-def test_guest_should_see_login_link(browser):
-    link = "http://selenium1py.pythonanywhere.com/"
-    page = MainPage(browser, link)
+    link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{link}"
+    print(f"TEST === # {link}")
+    page = ProductPage(browser, link)
     page.open()
-    page.should_be_login_link()
+    product_page = page.product_page()
