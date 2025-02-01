@@ -2,7 +2,7 @@ from .pages.main_page import MainPage
 from selenium.webdriver.common.by import By
 from .pages.login_page import LoginPage
 
-link = "http://selenium1py.pythonanywhere.com/"
+link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
 
 
 
@@ -14,7 +14,7 @@ def test_guest_can_go_to_login_page(browser):
     login_page.should_be_login_page()
     
     
-def go_to_login_page(browser):
+def add_product(browser):
     login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
     login_link.click()
 
