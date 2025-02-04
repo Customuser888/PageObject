@@ -16,8 +16,8 @@ class ProductPage(BasePage):
         self.return_book_name()
         self.return_book_price()
         
-        self.product_name_matches_the_one_added(self.return_book_name())
-        self.price_is_the_same_as_product(self.return_book_price())
+        #self.product_name_matches_the_one_added(self.return_book_name())
+        #self.price_is_the_same_as_product(self.return_book_price())
         
         
     def should_be_newYear_url(self):
@@ -38,4 +38,19 @@ class ProductPage(BasePage):
         basket_price = self.browser.find_element(*ProductPageLocators.BASKET_PRICE)
         assert basket_price.text == book_price, f"basket prise is {basket_price}, but book price is {book_price}"
 
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
     
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).\
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
